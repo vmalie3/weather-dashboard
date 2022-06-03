@@ -1,5 +1,4 @@
 var APIKey = '451106ee2d8f4c322ae25a778b2d207a';
-// var city;
 var cityInput = document.querySelector('#cityInput'); 
 var searchBtn = document.querySelector('#searchBtn');
 var formEl = document.querySelector('#form');
@@ -9,9 +8,10 @@ var displayCityName = document.querySelector('#displayCity');
 var searchCity = function(event) {
     event.preventDefault();
 
-    var cityName = cityInput.value.trim().toLowerCase();
+    var cityName = '';
+    cityName = cityInput.value.trim();
 
-    if (cityName) {
+    
         getWeather(cityName).then(function (data) {
             var lat = data.coord.lat;
             var long = data.coord.lon;
@@ -20,14 +20,14 @@ var searchCity = function(event) {
             return callOtherAPI(lat, long);
         })
         cityInput.value = '';
-    }
+    
 };
 
 var getWeather = function (city) {
     var APIUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + APIKey;
     console.log(city);
     console.log(APIUrl);
-    displayCity(city);
+    // displayCity(city);
     return fetch(APIUrl)
         .then(function(response) {
            return response.json()
@@ -39,9 +39,19 @@ var getWeather = function (city) {
 var displayData = function(data) {
     console.log(data);
     console.log(data.list[0].main.temp);
+
+    display.innerHTML = '';
+
+    var nameOfCity = document.createElement('h3');
+    nameOfCity.textContent = 'Weather in ' + data.city.name;
+    display.appendChild(nameOfCity);
+
+    
     // var daysData = data.list[i];
     for (var i = 0; i < data.list.length; i++) {
+
         var container = document.createElement('div');
+        container.classList.add('.space');
         display.appendChild(container);
         
         var date = document.createElement('h4');
@@ -52,7 +62,7 @@ var displayData = function(data) {
         temp.textContent = 'Temp: ' + data.list[i].main.temp;
         container.appendChild(temp);
 
-        
+        // Creating this for temp because I don't have access to UV data; done to prove ability / functionality
         var tempColor = function() {
             if (data.list[i].main.temp >= 80) {
                 temp.style.backgroundColor = 'red';
@@ -72,13 +82,11 @@ var displayData = function(data) {
 
         var weatherIcon = function() {
             if (currentWeather === 'Clouds') {
-                weather.textContent = "☁"; 
+                weather.textContent = "Weather: ☁"; 
             } else if (currentWeather = 'Rain') {
-                weather.textContent = "💦";
+                weather.textContent = "Weather: 💦";
             } else if (currentWeather = 'Clear') {
-                weather.textContent = '🌞';
-            } else {
-                weather.textContent = '';
+                weather.textContent = 'Weather: 🌞';
             }
         }
         weatherIcon();
@@ -90,6 +98,9 @@ var displayData = function(data) {
         var humidity = document.createElement('p');
         humidity.textContent = 'Humidity: ' + data.list[i].main.humidity;
         container.appendChild(humidity);
+
+        var space = document.createElement('br');
+        display.appendChild(space);
     }  
 }; 
 // var displayData = function(data) {
@@ -113,12 +124,14 @@ var callOtherAPI = function (lat, long) {
         })   
 }
 
-var displayCity = function(city) {
-    displayCityName.textContent = city;
-    console.log(city); 
-};
+// var displayCity = function(city) {
+
+//     displayCityName.textContent = 'Weather in ' + city;
+//     console.log(city); 
+
+    
+// };
 
 
 
 searchBtn.addEventListener('click', searchCity);
-
