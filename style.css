@@ -1,3 +1,16 @@
+body{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: aliceblue;
+}
+
+header {
+    text-align: center;
+    color: white;
+    background-color: blue;
+    padding: 3px;
+    margin: none;
+}
+
 div {
     background-color: lightblue;
     margin: 4%;

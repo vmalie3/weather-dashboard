@@ -8,25 +8,17 @@ var displayCityName = document.querySelector('#displayCity');
 var searchCity = function(event) {
     event.preventDefault();
 
-    var cityName = '';
-    cityName = cityInput.value.trim();
-
-    
-        getWeather(cityName).then(function (data) {
-            var lat = data.coord.lat;
-            var long = data.coord.lon;
-            console.log(data);
-
-            return callOtherAPI(lat, long);
-        })
-        cityInput.value = '';
+    var cityName = cityInput.value.trim();
+   
+    getWeather(cityName).then(function (data) {
+        return callOtherAPI(data.coord.lat, data.coord.lon);
+    })
+    cityInput.value = '';
     
 };
 
 var getWeather = function (city) {
     var APIUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + APIKey;
-    console.log(city);
-    console.log(APIUrl);
     // displayCity(city);
     return fetch(APIUrl)
         .then(function(response) {
@@ -38,13 +30,13 @@ var getWeather = function (city) {
 
 var displayData = function(data) {
     console.log(data);
-    console.log(data.list[0].main.temp);
 
     var pastButton = document.createElement('button');
     pastButton.textContent = data.city.name;
     pastButton.classList.add('.newBtn');
     formEl.appendChild(pastButton);
-    console.log(pastButton);
+
+    pastButton.addEventListener('click', pastBtnSearch);
 
     display.innerHTML = '';
 
@@ -112,15 +104,20 @@ var displayData = function(data) {
 
 var callOtherAPI = function (lat, long) {
     var APIUrl = 'http://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+long+'&cnt=5&units=imperial&appid=' + APIKey;
-    return fetch(APIUrl)
-        .then(function(response) {
-            response.json().then(function(data){
-                displayData(data);
-            })
-            
-           
-        })   
+    return fetch(APIUrl).then(function(response) {
+        response.json().then(function(data){
+            displayData(data);
+        })
+    })   
 }
+
+var pastBtnSearch = function(target) {
+    target.preventDefault();
+
+    cityName = target.innerText;
+    console.log(cityName);
+
+};
 
 searchBtn.addEventListener('click', searchCity);
 
