@@ -40,6 +40,12 @@ var displayData = function(data) {
     console.log(data);
     console.log(data.list[0].main.temp);
 
+    var pastButton = document.createElement('button');
+    pastButton.textContent = data.city.name;
+    pastButton.classList.add('.newBtn');
+    formEl.appendChild(pastButton);
+    console.log(pastButton);
+
     display.innerHTML = '';
 
     var nameOfCity = document.createElement('h3');
@@ -103,14 +109,6 @@ var displayData = function(data) {
         display.appendChild(space);
     }  
 }; 
-// var displayData = function(data) {
-//     console.log(data);
-//     console.log(data.list[0].main.temp);
-
-//     var temp = document.createElement('p');
-//     temp.textContent = 'Temp: ' + data.list[0].main.temp;
-//     display.appendChild(temp);
-// };
 
 var callOtherAPI = function (lat, long) {
     var APIUrl = 'http://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+long+'&cnt=5&units=imperial&appid=' + APIKey;
@@ -124,14 +122,5 @@ var callOtherAPI = function (lat, long) {
         })   
 }
 
-// var displayCity = function(city) {
-
-//     displayCityName.textContent = 'Weather in ' + city;
-//     console.log(city); 
-
-    
-// };
-
-
-
 searchBtn.addEventListener('click', searchCity);
+
