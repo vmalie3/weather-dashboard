@@ -18,7 +18,7 @@ var searchCity = function(event) {
 };
 
 var getWeather = function (city) {
-    var APIUrl = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + APIKey;
+    var APIUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + APIKey;
     // displayCity(city);
     return fetch(APIUrl)
         .then(function(response) {
@@ -103,7 +103,7 @@ var displayData = function(data) {
 }; 
 
 var callOtherAPI = function (lat, long) {
-    var APIUrl = 'http://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+long+'&cnt=5&units=imperial&appid=' + APIKey;
+    var APIUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+long+'&cnt=5&units=imperial&appid=' + APIKey;
     return fetch(APIUrl).then(function(response) {
         response.json().then(function(data){
             displayData(data);
