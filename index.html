@@ -11,15 +11,16 @@
     <header>
         <h1>Weather Forecast</h1>
     </header>
-    <aside>
+    <aside id="aside">
         <h3>Search a City</h3>
-        <form action="">
-            <input type="text">
-            <button>Search</button>
+        <form id="form">
+            <input id="cityInput" type="text">
+            <button id="searchBtn">Search</button>
         </form>
     </aside>
     <section>
-
+        <h3>Weather in: <span id="displayCity"></span></h3>
+        <div id="displayAPI"></div>
     </section>
 
     <script src="./script.js"></script>
